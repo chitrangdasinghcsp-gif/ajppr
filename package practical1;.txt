@@ -1,0 +1,46 @@
+package practical1;
+
+import java.awt.;
+import java.awt.event.;
+
+public class KeyEventDemo extends Frame implements KeyListener {
+
+    String msg = Press any key...;
+
+    public KeyEventDemo() {
+        setTitle(Key Event Demo);
+        setSize(400, 300);
+        setVisible(true);
+
+        addKeyListener(this);
+
+        addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent we) {
+                System.exit(0);
+            }
+        });
+    }
+
+    public void paint(Graphics g) {
+        g.drawString(msg, 100, 150);
+    }
+
+    public void keyPressed(KeyEvent e) {
+        msg = Key Pressed  + e.getKeyChar();
+        repaint();
+    }
+
+    public void keyReleased(KeyEvent e) {
+        msg = Key Released  + e.getKeyChar();
+        repaint();
+    }
+
+    public void keyTyped(KeyEvent e) {
+        msg = Key Typed  + e.getKeyChar();
+        repaint();
+    }
+
+    public static void main(String[] args) {
+        new KeyEventDemo();
+    }
+}  
