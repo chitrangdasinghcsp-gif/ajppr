@@ -1,0 +1,116 @@
+package Practical5;
+
+import java.rmi.;
+import java.util.Scanner;
+
+public class PalindromeClient {
+
+    public static void main(String[] args) {
+        try {
+            PalindromeInterface obj = (PalindromeInterface)
+                    Naming.lookup(rmilocalhost1099palindrome);
+
+            Scanner sc = new Scanner(System.in);
+
+            System.out.print(Enter string or number );
+            String input = sc.nextLine();
+
+            String result = obj.checkPalindrome(input);
+
+            System.out.println(result);
+
+            sc.close();
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+}
+
+
+
+//palindrome impl 
+
+package Practical5;
+
+import java.rmi.*;
+import java.rmi.server.*;
+
+public class PalindromeImpl extends UnicastRemoteObject implements PalindromeInterface {
+
+    protected PalindromeImpl() throws RemoteException {
+        super();
+    }
+
+    public String checkPalindrome(String input) throws RemoteException {
+
+        // Check if number
+        if (input.matches("\\d+")) {
+            int num = Integer.parseInt(input);
+            int original = num;
+            int reverse = 0;
+
+            while (num > 0) {
+                int digit = num % 10;
+                reverse = reverse * 10 + digit;
+                num = num / 10;
+            }
+
+            if (original == reverse)
+                return "Number is Palindrome";
+            else
+                return "Number is NOT Palindrome";
+        } else {
+            String original = input;
+            String reverse = "";
+
+            for (int i = original.length() - 1; i >= 0; i--) {
+                reverse = reverse + original.charAt(i);
+            }
+
+            if (original.equalsIgnoreCase(reverse))
+                return "String is Palindrome";
+            else
+                return "String is NOT Palindrome";
+        }
+    }
+}
+
+
+//Palindrome interface 
+
+
+package Practical5;
+
+import java.rmi.*;
+
+public interface PalindromeInterface extends Remote {
+
+    String checkPalindrome(String input) throws RemoteException;
+
+}
+
+// 
+
+
+package Practical5;
+
+import java.rmi.*;
+import java.rmi.registry.*;
+
+public class PalindromeServer {
+
+    public static void main(String[] args) {
+        try {
+            PalindromeImpl obj = new PalindromeImpl();
+
+            LocateRegistry.createRegistry(1099); // start RMI registry
+
+            Naming.rebind("rmi://localhost:1099/palindrome", obj);
+
+            System.out.println("Server is running...");
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+}
