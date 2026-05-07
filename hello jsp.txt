@@ -1,0 +1,11 @@
+<%@ page language="java" contentType="text/html" %>
+<html>
+<head>
+    <title>JSP Example</title>
+</head>
+<body>
+
+<h2>Hello, this is my first JSP page!</h2>
+
+</body>
+</html>
