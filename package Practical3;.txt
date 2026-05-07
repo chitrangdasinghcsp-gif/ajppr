@@ -1,0 +1,93 @@
+package Practical3;
+
+import java.awt.;
+import java.awt.event.;
+
+public class StudentResultGUI extends Frame implements ActionListener {
+
+    Label l1, l2, l3, l4, l5, l6;
+    TextField t1, t2, t3, t4, t5;
+    Button btn;
+
+    public StudentResultGUI() {
+        setTitle(Student Marks Entry);
+        setSize(400, 400);
+        setLayout(new GridLayout(7, 2));
+
+        l1 = new Label(Subject 1 Marks);
+        l2 = new Label(Subject 2 Marks);
+        l3 = new Label(Subject 3 Marks);
+        l4 = new Label(Subject 4 Marks);
+        l5 = new Label(Subject 5 Marks);
+        l6 = new Label(Result);
+
+        t1 = new TextField();
+        t2 = new TextField();
+        t3 = new TextField();
+        t4 = new TextField();
+        t5 = new TextField();
+
+        btn = new Button(Calculate Result);
+        btn.addActionListener(this);
+
+        add(l1); add(t1);
+        add(l2); add(t2);
+        add(l3); add(t3);
+        add(l4); add(t4);
+        add(l5); add(t5);
+        add(btn); add(new Label());
+
+        addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent we) {
+                System.exit(0);
+            }
+        });
+
+        setVisible(true);
+    }
+
+    public void actionPerformed(ActionEvent e) {
+        int m1 = Integer.parseInt(t1.getText());
+        int m2 = Integer.parseInt(t2.getText());
+        int m3 = Integer.parseInt(t3.getText());
+        int m4 = Integer.parseInt(t4.getText());
+        int m5 = Integer.parseInt(t5.getText());
+
+        int total = m1 + m2 + m3 + m4 + m5;
+        double percentage = total  5.0;
+
+        String result;
+
+        if (percentage = 60)
+            result = First Class;
+        else if (percentage = 50)
+            result = Second Class;
+        else if (percentage = 40)
+            result = Pass;
+        else
+            result = Fail;
+
+         New Window to show result
+        Frame resultFrame = new Frame(Result Window);
+        resultFrame.setSize(300, 200);
+        resultFrame.setLayout(new FlowLayout());
+
+        Label resLabel = new Label(Total  + total + 
+                                    Percentage  + percentage + 
+                                    Result  + result);
+
+        resultFrame.add(resLabel);
+
+        resultFrame.addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent we) {
+                resultFrame.dispose();
+            }
+        });
+
+        resultFrame.setVisible(true);
+    }
+
+    public static void main(String[] args) {
+        new StudentResultGUI();
+    }
+}
